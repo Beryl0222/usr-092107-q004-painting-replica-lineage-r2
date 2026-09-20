@@ -1,0 +1,9 @@
+{
+  "event_id": "sample-004-001",
+  "event_type": "REFERENCE_FROZEN",
+  "aggregate_type": "reference_work",
+  "aggregate_id": "painting_replica_lineage-001",
+  "occurred_at": "2026-09-20T18:00:00+08:00",
+  "version": 1,
+  "summary": "登记古画临摹工艺谱系库的首条领域记录"
+}
