@@ -20,9 +20,21 @@
       "type": "string",
       "enum": [
         "REFERENCE_FROZEN",
+        "SURVEY_RECORDED",
+        "MATERIAL_LOT_REGISTERED",
         "MATERIAL_TESTED",
+        "TRIAL_SAMPLE_RECORDED",
         "STAGE_ATTESTED",
+        "RESPONSIBILITY_ASSIGNED",
+        "MENTORSHIP_RECORDED",
+        "MOUNTING_RECORDED",
+        "EXPERT_OPINION_RECORDED",
+        "SECRET_REGISTERED",
+        "DETECTION_RECORDED",
+        "REVIEW_FLAGGED",
         "OBJECT_ACCESSIONED",
+        "IDENTITY_RECLASSIFIED",
+        "LABEL_ISSUED",
         "LABEL_REVISED"
       ]
     },
@@ -32,6 +44,9 @@
         "reference_work",
         "replica_project",
         "material_lot",
+        "trial_sample",
+        "secret",
+        "detection",
         "collection_decision"
       ]
     },
@@ -52,5 +67,77 @@
       "minLength": 1
     }
   },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "event_type": { "const": "TRIAL_SAMPLE_RECORDED" } }
+      },
+      "then": {
+        "required": ["outcome"],
+        "properties": {
+          "outcome": { "enum": ["success", "failure", "partial"] }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "event_type": { "const": "RESPONSIBILITY_ASSIGNED" } }
+      },
+      "then": {
+        "required": ["assignee", "scope"]
+      }
+    },
+    {
+      "if": {
+        "properties": { "event_type": { "const": "SECRET_REGISTERED" } }
+      },
+      "then": {
+        "required": ["custodian", "authorization_scope"],
+        "not": {
+          "anyOf": [
+            { "required": ["content"] },
+            { "required": ["technique_detail"] }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "event_type": { "const": "REVIEW_FLAGGED" } }
+      },
+      "then": {
+        "required": ["targets"],
+        "properties": {
+          "targets": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "event_type": { "const": "IDENTITY_RECLASSIFIED" } }
+      },
+      "then": {
+        "required": ["from_identity", "to_identity"],
+        "properties": {
+          "to_identity": { "enum": ["original", "replica", "teaching_sample"] }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "event_type": { "const": "LABEL_ISSUED" } }
+      },
+      "then": {
+        "required": ["identity", "custody_level", "permission"],
+        "properties": {
+          "identity": { "enum": ["original", "replica", "teaching_sample"] }
+        }
+      }
+    }
+  ],
   "additionalProperties": true
 }

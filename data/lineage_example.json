@@ -1,0 +1,213 @@
+[
+  {
+    "event_id": "evt-2026-001",
+    "event_type": "REFERENCE_FROZEN",
+    "aggregate_type": "reference_work",
+    "aggregate_id": "RW-001",
+    "occurred_at": "2026-03-02T10:00:00+08:00",
+    "version": 1,
+    "summary": "冻结参照版本：《示例山水卷》甲本（故字001），登记版本、题跋与高清影像清单"
+  },
+  {
+    "event_id": "evt-2026-002",
+    "event_type": "SURVEY_RECORDED",
+    "aggregate_type": "reference_work",
+    "aggregate_id": "RW-001",
+    "occurred_at": "2026-03-10T15:30:00+08:00",
+    "version": 2,
+    "summary": "勘察记录归档：绢地残损三处、霉斑两处，检测点位图与显微照片入库"
+  },
+  {
+    "event_id": "evt-2026-003",
+    "event_type": "MATERIAL_LOT_REGISTERED",
+    "aggregate_type": "material_lot",
+    "aggregate_id": "ML-SILK-2026-01",
+    "occurred_at": "2026-03-18T09:00:00+08:00",
+    "version": 1,
+    "summary": "熟绢批次登记：产地、织造方式与批次号"
+  },
+  {
+    "event_id": "evt-2026-004",
+    "event_type": "MATERIAL_LOT_REGISTERED",
+    "aggregate_type": "material_lot",
+    "aggregate_id": "ML-PIG-2026-03",
+    "occurred_at": "2026-03-18T09:20:00+08:00",
+    "version": 1,
+    "summary": "石绿颜料批次登记"
+  },
+  {
+    "event_id": "evt-2026-005",
+    "event_type": "MATERIAL_TESTED",
+    "aggregate_type": "material_lot",
+    "aggregate_id": "ML-PIG-2026-03",
+    "occurred_at": "2026-04-02T14:00:00+08:00",
+    "version": 2,
+    "summary": "耐光试验不合格，该批次停用；失败记录保留备查"
+  },
+  {
+    "event_id": "evt-2026-006",
+    "event_type": "MATERIAL_LOT_REGISTERED",
+    "aggregate_type": "material_lot",
+    "aggregate_id": "ML-PIG-2026-05",
+    "occurred_at": "2026-04-08T10:00:00+08:00",
+    "version": 1,
+    "summary": "替代石绿批次登记"
+  },
+  {
+    "event_id": "evt-2026-007",
+    "event_type": "MATERIAL_TESTED",
+    "aggregate_type": "material_lot",
+    "aggregate_id": "ML-PIG-2026-05",
+    "occurred_at": "2026-04-20T14:00:00+08:00",
+    "version": 2,
+    "summary": "耐光与附着试验合格，准予用于正式临摹"
+  },
+  {
+    "event_id": "evt-2026-008",
+    "event_type": "RESPONSIBILITY_ASSIGNED",
+    "aggregate_type": "replica_project",
+    "aggregate_id": "RP-001",
+    "occurred_at": "2026-04-25T09:00:00+08:00",
+    "version": 1,
+    "summary": "张摹负责绢本勾描阶段",
+    "assignee": "张摹",
+    "scope": "底稿与墨骨，使用 ML-SILK-2026-01 绢"
+  },
+  {
+    "event_id": "evt-2026-009",
+    "event_type": "RESPONSIBILITY_ASSIGNED",
+    "aggregate_type": "replica_project",
+    "aggregate_id": "RP-001",
+    "occurred_at": "2026-04-25T09:05:00+08:00",
+    "version": 2,
+    "summary": "李染并行负责设色试验与样张",
+    "assignee": "李染",
+    "scope": "设色工艺试验、试验样张制作与记录"
+  },
+  {
+    "event_id": "evt-2026-010",
+    "event_type": "TRIAL_SAMPLE_RECORDED",
+    "aggregate_type": "trial_sample",
+    "aggregate_id": "TS-001",
+    "occurred_at": "2026-05-06T16:00:00+08:00",
+    "version": 1,
+    "summary": "第一张设色样张：石绿发花，失败原因与调色参数留档",
+    "outcome": "failure",
+    "operator": "李染",
+    "material_lots": ["ML-PIG-2026-03"]
+  },
+  {
+    "event_id": "evt-2026-011",
+    "event_type": "TRIAL_SAMPLE_RECORDED",
+    "aggregate_type": "trial_sample",
+    "aggregate_id": "TS-002",
+    "occurred_at": "2026-05-15T16:00:00+08:00",
+    "version": 1,
+    "summary": "改用 ML-PIG-2026-05 后样张合格，确认为正式设色依据",
+    "outcome": "success",
+    "operator": "李染",
+    "material_lots": ["ML-PIG-2026-05"]
+  },
+  {
+    "event_id": "evt-2026-012",
+    "event_type": "MENTORSHIP_RECORDED",
+    "aggregate_type": "replica_project",
+    "aggregate_id": "RP-001",
+    "occurred_at": "2026-05-20T10:00:00+08:00",
+    "version": 3,
+    "summary": "登记指导关系：王砚农指导李染设色工艺，起止时间与方式归档"
+  },
+  {
+    "event_id": "evt-2026-013",
+    "event_type": "SECRET_REGISTERED",
+    "aggregate_type": "secret",
+    "aggregate_id": "SEC-001",
+    "occurred_at": "2026-05-20T10:30:00+08:00",
+    "version": 1,
+    "summary": "诀窍《染绢水温口诀》登记在册，内容不入库",
+    "custodian": "王砚农",
+    "authorization_scope": "仅限 RP-001 项目组内现场演示，不得转录"
+  },
+  {
+    "event_id": "evt-2026-014",
+    "event_type": "STAGE_ATTESTED",
+    "aggregate_type": "replica_project",
+    "aggregate_id": "RP-001",
+    "occurred_at": "2026-06-10T11:00:00+08:00",
+    "version": 4,
+    "summary": "墨骨阶段影像确认：影像清单与哈希归档，据当时认识记为纯手绘底稿"
+  },
+  {
+    "event_id": "evt-2026-015",
+    "event_type": "MOUNTING_RECORDED",
+    "aggregate_type": "replica_project",
+    "aggregate_id": "RP-001",
+    "occurred_at": "2026-07-01T10:00:00+08:00",
+    "version": 5,
+    "summary": "装裱为手卷：镶料、浆糊配比与操作人记录归档"
+  },
+  {
+    "event_id": "evt-2026-016",
+    "event_type": "EXPERT_OPINION_RECORDED",
+    "aggregate_type": "replica_project",
+    "aggregate_id": "RP-001",
+    "occurred_at": "2026-07-08T14:00:00+08:00",
+    "version": 6,
+    "summary": "专家意见：设色层次接近原作，建议补记苔点笔法处理"
+  },
+  {
+    "event_id": "evt-2026-017",
+    "event_type": "OBJECT_ACCESSIONED",
+    "aggregate_type": "collection_decision",
+    "aggregate_id": "CD-001",
+    "occurred_at": "2026-08-15T10:00:00+08:00",
+    "version": 1,
+    "summary": "入藏决定：RP-001 成品由研究成果转为正式藏品，定为摹本",
+    "identity": "replica",
+    "custody_level": "一般藏品",
+    "permission": "限馆内研究阅览"
+  },
+  {
+    "event_id": "evt-2026-018",
+    "event_type": "DETECTION_RECORDED",
+    "aggregate_type": "detection",
+    "aggregate_id": "DET-001",
+    "occurred_at": "2026-09-01T15:00:00+08:00",
+    "version": 1,
+    "summary": "新检测结论：显微观察发现底稿留有复写纸痕迹"
+  },
+  {
+    "event_id": "evt-2026-019",
+    "event_type": "REVIEW_FLAGGED",
+    "aggregate_type": "detection",
+    "aggregate_id": "DET-001",
+    "occurred_at": "2026-09-01T15:10:00+08:00",
+    "version": 2,
+    "summary": "据此标记 evt-2026-014 的阶段说明需复核；原记录保持不改动",
+    "targets": ["evt-2026-014"]
+  },
+  {
+    "event_id": "evt-2026-020",
+    "event_type": "OBJECT_ACCESSIONED",
+    "aggregate_type": "collection_decision",
+    "aggregate_id": "CD-002",
+    "occurred_at": "2026-08-20T10:00:00+08:00",
+    "version": 1,
+    "summary": "入藏决定：TS-002 合格样张定为教学样张，供临摹教学使用",
+    "identity": "teaching_sample",
+    "custody_level": "资料级",
+    "permission": "限教学现场使用"
+  },
+  {
+    "event_id": "evt-2026-021",
+    "event_type": "LABEL_ISSUED",
+    "aggregate_type": "collection_decision",
+    "aggregate_id": "CD-001",
+    "occurred_at": "2026-09-20T09:00:00+08:00",
+    "version": 2,
+    "summary": "巡展借用标签：与当前身份、保管级别和许可核对一致后输出",
+    "identity": "replica",
+    "custody_level": "一般藏品",
+    "permission": "允许国内巡展，须恒温恒湿并专人押运"
+  }
+]
