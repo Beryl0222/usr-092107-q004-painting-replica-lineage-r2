@@ -5,5 +5,12 @@
   "aggregate_id": "painting_replica_lineage-001",
   "occurred_at": "2026-09-20T18:00:00+08:00",
   "version": 1,
-  "summary": "登记古画临摹工艺谱系库的首条领域记录"
+  "summary": "登记古画临摹工艺谱系库的首条领域记录",
+  "payload": {
+    "title": "（联调用）参照原作",
+    "basis_version": "2003年重装后本"
+  },
+  "access": {
+    "classification": "open"
+  }
 }

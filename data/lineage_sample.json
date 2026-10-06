@@ -1,0 +1,691 @@
+[
+  {
+    "event_id": "evt-ref-qiushan-01",
+    "event_type": "REFERENCE_FROZEN",
+    "aggregate_type": "reference_work",
+    "aggregate_id": "ref-qiushan",
+    "occurred_at": "1985-03-02T09:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 1,
+    "summary": "锁定《秋山行旅图》为临摹参照版本，以1978年重装后本为准",
+    "actor": {"person_id": "p-gujian", "name": "顾鉴", "role": "expert"},
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "title": "秋山行旅图",
+      "dynasty": "北宋（旧题）",
+      "attribution": "佚名，旧题郭熙",
+      "holding_institution": "某博物院绘画馆",
+      "basis_version": "1978年重装后本",
+      "condition_note": "绢本设色，卷面有旧补两处，以重装后现状勘察为准"
+    },
+    "evidence_refs": [
+      {"kind": "reference_image", "uri": "urn:archive:ref-qiushan/1985/全卷可见光", "recorded_at": "1985-03-02T09:30:00+08:00"}
+    ]
+  },
+
+  {
+    "event_id": "evt-lot-silk-8501-01",
+    "event_type": "MATERIAL_LOT_RECORDED",
+    "aggregate_type": "material_lot",
+    "aggregate_id": "lot-silk-8501",
+    "occurred_at": "1985-03-20T10:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 1,
+    "summary": "登记首批临摹用素绢（苏州染坊）",
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "material_kind": "silk",
+      "batch_no": "丝-8501",
+      "name": "素纺绢",
+      "source": "苏州城东染坊",
+      "received_on": "1985-03-18"
+    }
+  },
+  {
+    "event_id": "evt-lot-silk-8501-02",
+    "event_type": "MATERIAL_TESTED",
+    "aggregate_type": "material_lot",
+    "aggregate_id": "lot-silk-8501",
+    "occurred_at": "1985-04-05T15:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 2,
+    "summary": "首批素绢染旧与托墨试验未通过",
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "test": "染旧后色度与托墨晕散",
+      "suitable": false,
+      "attempt_id": "attempt-B",
+      "notes": "染旧偏红，落墨晕散，与原作包浆差距明显"
+    }
+  },
+  {
+    "event_id": "evt-lot-silk-8504-01",
+    "event_type": "MATERIAL_LOT_RECORDED",
+    "aggregate_type": "material_lot",
+    "aggregate_id": "lot-silk-8504",
+    "occurred_at": "1985-05-08T10:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 1,
+    "summary": "登记更换后的素绢批次",
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "material_kind": "silk",
+      "batch_no": "丝-8504",
+      "name": "加重素纺绢",
+      "source": "湖州丝织社",
+      "received_on": "1985-05-06"
+    }
+  },
+  {
+    "event_id": "evt-lot-silk-8504-02",
+    "event_type": "MATERIAL_TESTED",
+    "aggregate_type": "material_lot",
+    "aggregate_id": "lot-silk-8504",
+    "occurred_at": "1985-05-20T15:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 2,
+    "summary": "更换后素绢通过染旧与托墨试验",
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "test": "染旧后色度与托墨",
+      "suitable": true,
+      "attempt_id": "attempt-B",
+      "notes": "色度接近，可用于正式摹制"
+    }
+  },
+  {
+    "event_id": "evt-lot-azurite-8502-01",
+    "event_type": "MATERIAL_LOT_RECORDED",
+    "aggregate_type": "material_lot",
+    "aggregate_id": "lot-azurite-8502",
+    "occurred_at": "1985-04-12T10:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 1,
+    "summary": "登记设色用石青批次（当年凭目验按矿物颜料入库）",
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "material_kind": "pigment",
+      "batch_no": "石青-8502",
+      "name": "头青石青",
+      "source": "国画颜料供应社",
+      "received_on": "1985-04-10"
+    }
+  },
+  {
+    "event_id": "evt-lot-knowhow-8503-01",
+    "event_type": "MATERIAL_LOT_RECORDED",
+    "aggregate_type": "material_lot",
+    "aggregate_id": "lot-knowhow-8503",
+    "occurred_at": "1985-04-15T10:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 1,
+    "summary": "登记石青水漂炮制诀窍（内容受限）",
+    "actor": {"person_id": "p-zhangheng", "name": "张衡", "role": "chief_copyist"},
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {
+      "classification": "custodian_only",
+      "custodian": "绘画修复临摹组（岗位：颜料保管）",
+      "authorization_scopes": ["know_how:pigment_preparation"],
+      "license_id": "内部诀窍-不外借"
+    },
+    "payload": {
+      "material_kind": "pigment",
+      "batch_no": "诀窍-8503",
+      "name": "石青水漂分层炮制法",
+      "preparation": "【受限内容】水漂遍数、胶水比例与沉降时辰为师徒口传诀窍，未授权不可见。"
+    },
+    "evidence_refs": [
+      {"kind": "know_how_note", "uri": "urn:sealed:knowhow/8503/手札封套", "sha256": "0fbdc0a7d63e48f097307760e53fa1f8e24e6d1f9b41f58e5c87c8d314c7b213"}
+    ]
+  },
+
+  {
+    "event_id": "evt-proj-1985-01",
+    "event_type": "PROJECT_OPENED",
+    "aggregate_type": "replica_project",
+    "aggregate_id": "proj-1985-qiushan",
+    "occurred_at": "1985-03-10T09:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 1,
+    "summary": "立项：《秋山行旅图》研究性全卷临摹",
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "title": "《秋山行旅图》1985年研究临摹",
+      "goal": "research_copy",
+      "planned_period": {"from": "1985-03", "to": "1986-06"}
+    }
+  },
+  {
+    "event_id": "evt-proj-1985-02",
+    "event_type": "ASSIGNMENT_RECORDED",
+    "aggregate_type": "replica_project",
+    "aggregate_id": "proj-1985-qiushan",
+    "occurred_at": "1985-03-12T09:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 2,
+    "summary": "分工：张衡主摹全卷，李素分担绢地染旧试验，受张衡指导",
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "assignments": [
+        {
+          "person_id": "p-zhangheng",
+          "name": "张衡",
+          "role": "chief_copyist",
+          "scope": "全卷墨骨与设色，attempt-A",
+          "attempt_id": "attempt-A",
+          "period": {"from": "1985-03-12", "to": "1986-04-30"}
+        },
+        {
+          "person_id": "p-lisu",
+          "name": "李素",
+          "role": "assistant",
+          "scope": "绢地染旧与材料试样，attempt-B",
+          "attempt_id": "attempt-B",
+          "supervised_by_person_id": "p-zhangheng",
+          "period": {"from": "1985-03-12", "to": "1985-08-31"}
+        }
+      ]
+    }
+  },
+  {
+    "event_id": "evt-proj-1985-03",
+    "event_type": "TRIAL_RECORDED",
+    "aggregate_type": "replica_project",
+    "aggregate_id": "proj-1985-qiushan",
+    "occurred_at": "1985-04-06T16:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 3,
+    "summary": "李素第一次绢地染旧试验失败（丝-8501）",
+    "actor": {"person_id": "p-lisu", "name": "李素", "role": "assistant"},
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "attempt_id": "attempt-B",
+      "trial_no": 1,
+      "material_lot_ids": ["lot-silk-8501"],
+      "method": "赭石加茶染，一遍做旧",
+      "outcome": "failed",
+      "failure_reason": "绢地泛红偏火气，与原作冷褐包浆不符；该批绢托墨晕散"
+    },
+    "evidence_refs": [
+      {"kind": "trial_sheet", "uri": "urn:archive:proj-1985/attempt-B/trial-01"}
+    ]
+  },
+  {
+    "event_id": "evt-proj-1985-04",
+    "event_type": "TRIAL_RECORDED",
+    "aggregate_type": "replica_project",
+    "aggregate_id": "proj-1985-qiushan",
+    "occurred_at": "1985-05-22T16:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 4,
+    "summary": "更换丝-8504并分次套染后试样通过",
+    "actor": {"person_id": "p-lisu", "name": "李素", "role": "assistant"},
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "attempt_id": "attempt-B",
+      "trial_no": 2,
+      "material_lot_ids": ["lot-silk-8504"],
+      "method": "淡赭、墨青分次套染，自然晾干",
+      "outcome": "accepted"
+    },
+    "evidence_refs": [
+      {"kind": "trial_sheet", "uri": "urn:archive:proj-1985/attempt-B/trial-02"}
+    ]
+  },
+  {
+    "event_id": "evt-proj-1985-05",
+    "event_type": "STAGE_ATTESTED",
+    "aggregate_type": "replica_project",
+    "aggregate_id": "proj-1985-qiushan",
+    "occurred_at": "1986-04-28T17:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 5,
+    "summary": "全卷临摹完成，张衡核验签认",
+    "actor": {"person_id": "p-zhangheng", "name": "张衡", "role": "chief_copyist"},
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "stage": "completed",
+      "attempt_id": "attempt-A",
+      "object_id": "obj-fac-1985-01",
+      "note": "墨骨、皴染、设色、做旧各阶段影像齐备"
+    },
+    "evidence_refs": [
+      {"kind": "stage_photo", "uri": "urn:archive:proj-1985/stage/完成阶段-1986-04-28"}
+    ]
+  },
+  {
+    "event_id": "evt-proj-1985-06",
+    "event_type": "DETAIL_RECORDED",
+    "aggregate_type": "replica_project",
+    "aggregate_id": "proj-1985-qiushan",
+    "occurred_at": "1986-02-11T10:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 6,
+    "summary": "一代摹：主峰皴法细节处理记录",
+    "actor": {"person_id": "p-zhangheng", "name": "张衡", "role": "chief_copyist"},
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "detail_code": "peak.cun_texture",
+      "detail_name": "主峰卷云皴质理",
+      "generation": 1,
+      "attempt_id": "attempt-A",
+      "technique": "中锋淡墨勾廓后侧卧笔短皴，六层积染",
+      "material_lot_ids": ["lot-silk-8504"],
+      "note": "皴笔随绢纹走向，避免与原作补绢处纹理冲突"
+    }
+  },
+  {
+    "event_id": "evt-proj-1985-07",
+    "event_type": "DETAIL_RECORDED",
+    "aggregate_type": "replica_project",
+    "aggregate_id": "proj-1985-qiushan",
+    "occurred_at": "1986-03-02T10:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 7,
+    "summary": "一代摹：迎客松针叶细节处理记录",
+    "actor": {"person_id": "p-zhangheng", "name": "张衡", "role": "chief_copyist"},
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "detail_code": "pine.needles",
+      "detail_name": "前景迎客松针叶",
+      "generation": 1,
+      "attempt_id": "attempt-A",
+      "technique": "攒针分组，花青调石青罩染两次",
+      "material_lot_ids": ["lot-azurite-8502"]
+    }
+  },
+
+  {
+    "event_id": "evt-obj-fac-1985-01-01",
+    "event_type": "OBJECT_REGISTERED",
+    "aggregate_type": "replica_object",
+    "aggregate_id": "obj-fac-1985-01",
+    "occurred_at": "1986-05-10T09:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 1,
+    "summary": "摹本作为研究成果登记，当时未列入正式藏品台账",
+    "links": {"correlation_id": "lineage-qiushan", "causation_id": "proj-1985-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "title": "《秋山行旅图》张衡摹本（1986）",
+      "project_id": "proj-1985-qiushan",
+      "object_kind": "facsimile",
+      "status": "research_output",
+      "note": "研究成果，存临摹组资料柜，按普通复制品资料管理"
+    }
+  },
+  {
+    "event_id": "evt-obj-fac-1985-01-02",
+    "event_type": "MOUNTING_RECORDED",
+    "aggregate_type": "replica_object",
+    "aggregate_id": "obj-fac-1985-01",
+    "occurred_at": "1986-06-18T16:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 2,
+    "summary": "完成手卷装裱",
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "format": "handscroll",
+      "mounter": "陈裱（装帧社）",
+      "period": {"from": "1986-06-02", "to": "1986-06-18"},
+      "note": "浅色宋式锦包首，保留同治式轴头"
+    }
+  },
+  {
+    "event_id": "evt-obj-fac-1985-01-03",
+    "event_type": "EXPERT_OPINION_RECORDED",
+    "aggregate_type": "replica_object",
+    "aggregate_id": "obj-fac-1985-01",
+    "occurred_at": "1990-11-03T10:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 3,
+    "summary": "1990年目验意见：设色石青应为天然矿物颜料",
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "expert_id": "p-gujian",
+      "expert_name": "顾鉴",
+      "opinion": "摹本松针石青色泽沉稳，系天然矿物石青，与原作颜料路线一致。",
+      "recommendation": "none"
+    },
+    "evidence_refs": [
+      {"kind": "expert_opinion_document", "uri": "urn:archive:obj-fac-1985-01/opinion-1990"}
+    ]
+  },
+  {
+    "event_id": "evt-obj-fac-1985-01-04",
+    "event_type": "CONSERVATION_PERFORMED",
+    "aggregate_type": "replica_object",
+    "aggregate_id": "obj-fac-1985-01",
+    "occurred_at": "2001-09-12T15:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 4,
+    "summary": "画心局部脱墨加固与重接天头",
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "condition_before": "卷首两米处绢丝微松，天头接口开裂约3厘米",
+      "treatments": ["脱墨处稀矾水固定", "重接天头", "更换系带"],
+      "conservator": "周慎（文保科技部）",
+      "period": {"from": "2001-09-10", "to": "2001-09-12"}
+    },
+    "evidence_refs": [
+      {"kind": "conservation_report", "uri": "urn:archive:obj-fac-1985-01/conservation-2001"}
+    ]
+  },
+
+  {
+    "event_id": "evt-exam-2019-07-01",
+    "event_type": "EXAMINATION_RECORDED",
+    "aggregate_type": "examination",
+    "aggregate_id": "exam-2019-07",
+    "occurred_at": "2019-07-10T09:30:00+08:00",
+    "version": 1,
+    "summary": "对1986年摹本开展多手段检测，复核颜料与绢地",
+    "actor": {"person_id": "p-zhou shen", "name": "周慎", "role": "conservator"},
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "target": {"kind": "replica_object", "id": "obj-fac-1985-01"},
+      "methods": ["visible_light", "raking_light", "microscopy", "pigment_analysis", "fiber_analysis"]
+    },
+    "evidence_refs": [
+      {"kind": "micrograph", "uri": "urn:archive:exam-2019-07/显微-松针"},
+      {"kind": "spectrum", "uri": "urn:archive:exam-2019-07/光谱-石青-8502"}
+    ]
+  },
+  {
+    "event_id": "evt-exam-2019-07-02",
+    "event_type": "FINDING_RECORDED",
+    "aggregate_type": "examination",
+    "aggregate_id": "exam-2019-07",
+    "occurred_at": "2019-07-12T17:00:00+08:00",
+    "version": 2,
+    "summary": "检测结论：松针石青含现代合成群青特征，1990年目验认识需复核",
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "examination_id": "exam-2019-07",
+      "target": {"kind": "replica_object", "id": "obj-fac-1985-01"},
+      "conclusions": [
+        {
+          "claim": "松针蓝色样品检出合成群青典型元素组合与粒径分布，并非天然石青。",
+          "confidence": "high"
+        },
+        {
+          "claim": "绢地为机织加重绢，与1985年湖州丝织社批次（丝-8504）记录相符。",
+          "confidence": "medium"
+        }
+      ],
+      "flags_description_review": [
+        {
+          "aggregate_id": "obj-fac-1985-01",
+          "event_id": "evt-obj-fac-1985-01-03",
+          "claim": "1990年“天然矿物石青”的说明与新检测结论冲突，需要复核"
+        }
+      ]
+    }
+  },
+  {
+    "event_id": "evt-obj-fac-1985-01-05",
+    "event_type": "DESCRIPTION_REVIEW_FLAGGED",
+    "aggregate_type": "replica_object",
+    "aggregate_id": "obj-fac-1985-01",
+    "occurred_at": "2019-07-12T17:05:00+08:00",
+    "version": 5,
+    "summary": "据新检测结论标记1990年颜料说明待核（原文保留不倒改）",
+    "links": {"correlation_id": "lineage-qiushan", "causation_id": "evt-exam-2019-07-02"},
+    "access": {"classification": "open"},
+    "payload": {
+      "source_finding_event_id": "evt-exam-2019-07-02",
+      "claims_to_review": [
+        {
+          "event_id": "evt-obj-fac-1985-01-03",
+          "claim": "“松针石青系天然矿物颜料”——合成群青检出，待专家复核更正"
+        }
+      ],
+      "note": "仅挂复核标记；1990年意见代表当时认识，仍按原样留存。"
+    }
+  },
+  {
+    "event_id": "evt-obj-fac-1985-01-06",
+    "event_type": "EXPERT_OPINION_RECORDED",
+    "aggregate_type": "replica_object",
+    "aggregate_id": "obj-fac-1985-01",
+    "occurred_at": "2020-05-18T10:00:00+08:00",
+    "version": 6,
+    "summary": "专家意见：承认1990年颜料判断应修正；摹本工艺价值高，建议入藏",
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "expert_id": "p-linqi",
+      "expert_name": "林琦",
+      "opinion": "检测结论可信，旧卡“天然矿物石青”应改写为含合成群青；但全卷出自张衡之手、材料批次与工艺过程完整，具备独立藏品价值。",
+      "recommendation": "accession"
+    }
+  },
+  {
+    "event_id": "evt-obj-fac-1985-01-07",
+    "event_type": "EXPERT_OPINION_RECORDED",
+    "aggregate_type": "replica_object",
+    "aggregate_id": "obj-fac-1985-01",
+    "occurred_at": "2020-05-19T10:00:00+08:00",
+    "version": 7,
+    "summary": "专家意见：临摹谱系完整、失败试验留痕罕见，附议入藏",
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "expert_id": "p-gujian",
+      "expert_name": "顾鉴",
+      "opinion": "本人1990年颜料目验应让位于检测结论；该卷连同样稿、阶段影像与师承线索保存完整，建议作为工艺类藏品入藏。",
+      "recommendation": "accession"
+    }
+  },
+
+  {
+    "event_id": "evt-dec-2021-031-01",
+    "event_type": "OBJECT_ACCESSIONED",
+    "aggregate_type": "collection_decision",
+    "aggregate_id": "dec-2021-031",
+    "occurred_at": "2021-03-15T14:00:00+08:00",
+    "version": 1,
+    "summary": "藏品鉴定委员会同意将1986年摹本正式入藏，保管级别二级",
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "object_id": "obj-fac-1985-01",
+      "decision": "accepted",
+      "accession_no": "新-0021847",
+      "custody_level": "L2",
+      "license_id": "展览许可-2021-L2-限学术与巡展",
+      "basis": ["author_value", "material_value", "craft_value"],
+      "committee_member_ids": ["p-linqi", "p-gujian", "p-zhou shen"],
+      "opinion_event_ids": ["evt-obj-fac-1985-01-06", "evt-obj-fac-1985-01-07"]
+    }
+  },
+  {
+    "event_id": "evt-obj-fac-1985-01-08",
+    "event_type": "IDENTITY_RECLASSIFIED",
+    "aggregate_type": "replica_object",
+    "aggregate_id": "obj-fac-1985-01",
+    "occurred_at": "2021-03-15T14:30:00+08:00",
+    "version": 8,
+    "summary": "身份变更：研究成果 → 正式藏品（摹本），原制作语境保留",
+    "links": {"correlation_id": "lineage-qiushan", "causation_id": "dec-2021-031"},
+    "access": {"classification": "open"},
+    "payload": {
+      "from_status": "research_output",
+      "to_status": "collection_item",
+      "from_kind": "facsimile",
+      "to_kind": "facsimile",
+      "reason": "作者价值、材料批次与工艺谱系完整，鉴定委员会同意入藏（新-0021847）；身份变更不改变其摹本性质",
+      "effective_from": "2021-03-15"
+    }
+  },
+
+  {
+    "event_id": "evt-lot-paper-0301-01",
+    "event_type": "MATERIAL_LOT_RECORDED",
+    "aggregate_type": "material_lot",
+    "aggregate_id": "lot-paper-0301",
+    "occurred_at": "2003-04-02T10:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 1,
+    "summary": "登记二代教学临摹用宣纸批次",
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "material_kind": "paper",
+      "batch_no": "纸-0301",
+      "name": "六尺净皮宣",
+      "source": "泾县纸厂",
+      "received_on": "2003-03-30"
+    }
+  },
+  {
+    "event_id": "evt-proj-2003-01",
+    "event_type": "PROJECT_OPENED",
+    "aggregate_type": "replica_project",
+    "aggregate_id": "proj-2003-teaching",
+    "occurred_at": "2003-04-06T09:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 1,
+    "summary": "立项：以1986年摹本为底本的教学临摹",
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "title": "《秋山行旅图》摹本再摹（教学）",
+      "goal": "teaching",
+      "planned_period": {"from": "2003-04", "to": "2003-12"}
+    }
+  },
+  {
+    "event_id": "evt-proj-2003-02",
+    "event_type": "ASSIGNMENT_RECORDED",
+    "aggregate_type": "replica_project",
+    "aggregate_id": "proj-2003-teaching",
+    "occurred_at": "2003-04-08T09:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 2,
+    "summary": "分工：王耘主摹，张衡退休返聘指导",
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "assignments": [
+        {
+          "person_id": "p-wangyun",
+          "name": "王耘",
+          "role": "copyist",
+          "scope": "纸本教学再摹全卷，attempt-C",
+          "attempt_id": "attempt-C",
+          "supervised_by_person_id": "p-zhangheng",
+          "period": {"from": "2003-04-08", "to": "2003-12-20"}
+        },
+        {
+          "person_id": "p-zhangheng",
+          "name": "张衡",
+          "role": "supervisor",
+          "scope": "皴法与染旧节点指导",
+          "period": {"from": "2003-04-08", "to": "2003-12-20"}
+        }
+      ]
+    }
+  },
+  {
+    "event_id": "evt-proj-2003-03",
+    "event_type": "DETAIL_RECORDED",
+    "aggregate_type": "replica_project",
+    "aggregate_id": "proj-2003-teaching",
+    "occurred_at": "2003-09-15T10:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 3,
+    "summary": "二代再摹：主峰皴法处理记录（与1986年同细节可对照）",
+    "actor": {"person_id": "p-wangyun", "name": "王耘", "role": "copyist"},
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "detail_code": "peak.cun_texture",
+      "detail_name": "主峰卷云皴质理",
+      "generation": 2,
+      "attempt_id": "attempt-C",
+      "technique": "依一代摹本简化为四层积染，纸本上皴笔略长",
+      "material_lot_ids": ["lot-paper-0301"],
+      "note": "纸本吃墨与绢本不同，张衡指导减少一层淡墨"
+    }
+  },
+  {
+    "event_id": "evt-proj-2003-04",
+    "event_type": "GENERATION_LINKED",
+    "aggregate_type": "replica_project",
+    "aggregate_id": "proj-2003-teaching",
+    "occurred_at": "2003-04-08T09:30:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 4,
+    "summary": "教学再摹以1986年摹本（而非原作）为直接母本",
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "parent": {"kind": "replica_object", "id": "obj-fac-1985-01"},
+      "relation": "copy_of_copy",
+      "note": "原作未出柜，全程对照一代摹本与1985年阶段影像"
+    }
+  },
+  {
+    "event_id": "evt-obj-teach-2004-09-01",
+    "event_type": "OBJECT_REGISTERED",
+    "aggregate_type": "replica_object",
+    "aggregate_id": "obj-teach-2004-09",
+    "occurred_at": "2004-01-12T09:00:00+08:00",
+    "recorded_at": "2026-09-20T18:00:00+08:00",
+    "version": 1,
+    "summary": "纸本再摹登记为教学样张，不作藏品",
+    "links": {"correlation_id": "lineage-qiushan", "causation_id": "proj-2003-teaching"},
+    "access": {"classification": "open"},
+    "payload": {
+      "title": "《秋山行旅图》教学再摹样张（王耘，2003）",
+      "project_id": "proj-2003-teaching",
+      "object_kind": "teaching_sample",
+      "status": "teaching_asset",
+      "note": "用于临摹技法课堂对照，禁止与原作或正式摹本混列"
+    }
+  },
+
+  {
+    "event_id": "evt-label-2026-tour-01",
+    "event_type": "LOAN_LABEL_ISSUED",
+    "aggregate_type": "loan_label",
+    "aggregate_id": "label-2026-autumn-tour",
+    "occurred_at": "2026-10-02T10:00:00+08:00",
+    "version": 1,
+    "summary": "为秋巡签发摹本标签，身份快照与当前入藏状态一致",
+    "actor": {"person_id": "p-registrar", "name": "藏品管理员", "role": "registrar"},
+    "links": {"correlation_id": "lineage-qiushan"},
+    "access": {"classification": "open"},
+    "payload": {
+      "object_id": "obj-fac-1985-01",
+      "loan_exhibition": "2026秋“千峰对影：临摹的艺术”巡展",
+      "label_text": "摹本（非原作）｜《秋山行旅图》张衡摹本，1986年，绢本设色手卷｜馆藏新-0021847，二级藏品｜设色含合成群青（2019年检）",
+      "identity_snapshot": {
+        "object_kind": "facsimile",
+        "status": "collection_item",
+        "custody_level": "L2",
+        "license_id": "展览许可-2021-L2-限学术与巡展"
+      },
+      "valid_period": {"from": "2026-10-20", "to": "2027-01-10"}
+    }
+  }
+]

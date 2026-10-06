@@ -1,6 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "古画临摹工艺谱系库领域事件",
+  "description": "摹本从研究成果到正式藏品的全生命周期事件信封。记录一经接收，event_id / occurred_at / version 不得原地改写；更正只能以携带 links.supersedes_event_id 的后继事件追加。classification=custodian_only 的事件（如传统诀窍）只暴露保管人与授权范围，未授权研究者不可读取 payload 与 evidence_refs。",
   "type": "object",
   "required": [
     "event_id",
@@ -17,23 +18,10 @@
       "minLength": 1
     },
     "event_type": {
-      "type": "string",
-      "enum": [
-        "REFERENCE_FROZEN",
-        "MATERIAL_TESTED",
-        "STAGE_ATTESTED",
-        "OBJECT_ACCESSIONED",
-        "LABEL_REVISED"
-      ]
+      "$ref": "#/$defs/event_type"
     },
     "aggregate_type": {
-      "type": "string",
-      "enum": [
-        "reference_work",
-        "replica_project",
-        "material_lot",
-        "collection_decision"
-      ]
+      "$ref": "#/$defs/aggregate_type"
     },
     "aggregate_id": {
       "type": "string",
@@ -41,16 +29,780 @@
     },
     "occurred_at": {
       "type": "string",
-      "format": "date-time"
+      "format": "date-time",
+      "description": "领域事实发生时间（如临摹当天），接收后不可修改。"
+    },
+    "recorded_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "系统接收时间，可晚于 occurred_at（补录场景）。"
     },
     "version": {
       "type": "integer",
-      "minimum": 1
+      "minimum": 1,
+      "description": "同一 aggregate_id 流内从 1 起严格递增。"
     },
     "summary": {
       "type": "string",
       "minLength": 1
+    },
+    "actor": {
+      "$ref": "#/$defs/actor"
+    },
+    "participants": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/participant"
+      },
+      "description": "本节点涉及的全部人员及其责任范围；多人接续或并行（attempt_id 区分）时逐条登记。"
+    },
+    "links": {
+      "type": "object",
+      "properties": {
+        "supersedes_event_id": {
+          "type": ["string", "null"],
+          "description": "本事件更正的同聚合既有事件；被更正事件保留不删改。"
+        },
+        "causation_id": {
+          "type": "string",
+          "description": "触发本事件的决定/指令标识。"
+        },
+        "correlation_id": {
+          "type": "string",
+          "description": "把跨聚合节点串成同一谱系的关联标识（如项目号）。"
+        }
+      },
+      "additionalProperties": false
+    },
+    "access": {
+      "$ref": "#/$defs/access"
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidence"
+      }
+    },
+    "payload": {
+      "type": "object",
+      "description": "事件专属内容，形状由 event_type 的 if/then 约束。"
     }
   },
-  "additionalProperties": true
+  "allOf": [
+    {
+      "if": { "properties": { "event_type": { "const": "REFERENCE_FROZEN" } }, "required": ["event_type"] },
+      "then": { "properties": { "aggregate_type": { "const": "reference_work" }, "payload": { "$ref": "#/$defs/payload_reference_frozen" } }, "required": ["payload"] }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "EXAMINATION_RECORDED" } }, "required": ["event_type"] },
+      "then": { "properties": { "aggregate_type": { "const": "examination" }, "payload": { "$ref": "#/$defs/payload_examination_recorded" } }, "required": ["payload"] }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "FINDING_RECORDED" } }, "required": ["event_type"] },
+      "then": { "properties": { "aggregate_type": { "const": "examination" }, "payload": { "$ref": "#/$defs/payload_finding_recorded" } }, "required": ["payload"] }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "PROJECT_OPENED" } }, "required": ["event_type"] },
+      "then": { "properties": { "aggregate_type": { "const": "replica_project" }, "payload": { "$ref": "#/$defs/payload_project_opened" } }, "required": ["payload"] }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "ASSIGNMENT_RECORDED" } }, "required": ["event_type"] },
+      "then": { "properties": { "aggregate_type": { "const": "replica_project" }, "payload": { "$ref": "#/$defs/payload_assignment_recorded" } }, "required": ["payload"] }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "MATERIAL_LOT_RECORDED" } }, "required": ["event_type"] },
+      "then": { "properties": { "aggregate_type": { "const": "material_lot" }, "payload": { "$ref": "#/$defs/payload_material_lot_recorded" } }, "required": ["payload"] }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "MATERIAL_TESTED" } }, "required": ["event_type"] },
+      "then": { "properties": { "aggregate_type": { "const": "material_lot" }, "payload": { "$ref": "#/$defs/payload_material_tested" } }, "required": ["payload"] }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "TRIAL_RECORDED" } }, "required": ["event_type"] },
+      "then": {
+        "properties": {
+          "aggregate_type": { "const": "replica_project" },
+          "payload": {
+            "allOf": [
+              { "$ref": "#/$defs/payload_trial_recorded" },
+              {
+                "if": { "properties": { "outcome": { "const": "failed" } }, "required": ["outcome"] },
+                "then": { "required": ["failure_reason"] }
+              }
+            ]
+          }
+        },
+        "required": ["payload"]
+      }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "STAGE_ATTESTED" } }, "required": ["event_type"] },
+      "then": { "properties": { "aggregate_type": { "const": "replica_project" }, "payload": { "$ref": "#/$defs/payload_stage_attested" } }, "required": ["payload"] }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "DETAIL_RECORDED" } }, "required": ["event_type"] },
+      "then": { "properties": { "aggregate_type": { "const": "replica_project" }, "payload": { "$ref": "#/$defs/payload_detail_recorded" } }, "required": ["payload"] }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "GENERATION_LINKED" } }, "required": ["event_type"] },
+      "then": { "properties": { "aggregate_type": { "const": "replica_project" }, "payload": { "$ref": "#/$defs/payload_generation_linked" } }, "required": ["payload"] }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "OBJECT_REGISTERED" } }, "required": ["event_type"] },
+      "then": { "properties": { "aggregate_type": { "const": "replica_object" }, "payload": { "$ref": "#/$defs/payload_object_registered" } }, "required": ["payload"] }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "IDENTITY_RECLASSIFIED" } }, "required": ["event_type"] },
+      "then": { "properties": { "aggregate_type": { "const": "replica_object" }, "payload": { "$ref": "#/$defs/payload_identity_reclassified" } }, "required": ["payload"] }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "MOUNTING_RECORDED" } }, "required": ["event_type"] },
+      "then": { "properties": { "aggregate_type": { "const": "replica_object" }, "payload": { "$ref": "#/$defs/payload_mounting_recorded" } }, "required": ["payload"] }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "CONSERVATION_PERFORMED" } }, "required": ["event_type"] },
+      "then": { "properties": { "aggregate_type": { "const": "replica_object" }, "payload": { "$ref": "#/$defs/payload_conservation_performed" } }, "required": ["payload"] }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "EXPERT_OPINION_RECORDED" } }, "required": ["event_type"] },
+      "then": { "properties": { "aggregate_type": { "const": "replica_object" }, "payload": { "$ref": "#/$defs/payload_expert_opinion_recorded" } }, "required": ["payload"] }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "DESCRIPTION_REVIEW_FLAGGED" } }, "required": ["event_type"] },
+      "then": { "properties": { "aggregate_type": { "const": "replica_object" }, "payload": { "$ref": "#/$defs/payload_description_review_flagged" } }, "required": ["payload"] }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "OBJECT_ACCESSIONED" } }, "required": ["event_type"] },
+      "then": { "properties": { "aggregate_type": { "const": "collection_decision" }, "payload": { "$ref": "#/$defs/payload_object_accessioned" } }, "required": ["payload"] }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "LABEL_REVISED" } }, "required": ["event_type"] },
+      "then": { "properties": { "aggregate_type": { "const": "loan_label" }, "payload": { "$ref": "#/$defs/payload_label_revised" } }, "required": ["payload"] }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "LOAN_LABEL_ISSUED" } }, "required": ["event_type"] },
+      "then": { "properties": { "aggregate_type": { "const": "loan_label" }, "payload": { "$ref": "#/$defs/payload_loan_label_issued" } }, "required": ["payload"] }
+    }
+  ],
+  "$defs": {
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "REFERENCE_FROZEN",
+        "EXAMINATION_RECORDED",
+        "FINDING_RECORDED",
+        "PROJECT_OPENED",
+        "ASSIGNMENT_RECORDED",
+        "MATERIAL_LOT_RECORDED",
+        "MATERIAL_TESTED",
+        "TRIAL_RECORDED",
+        "STAGE_ATTESTED",
+        "DETAIL_RECORDED",
+        "GENERATION_LINKED",
+        "OBJECT_REGISTERED",
+        "IDENTITY_RECLASSIFIED",
+        "MOUNTING_RECORDED",
+        "CONSERVATION_PERFORMED",
+        "EXPERT_OPINION_RECORDED",
+        "DESCRIPTION_REVIEW_FLAGGED",
+        "OBJECT_ACCESSIONED",
+        "LABEL_REVISED",
+        "LOAN_LABEL_ISSUED"
+      ]
+    },
+    "aggregate_type": {
+      "type": "string",
+      "enum": [
+        "reference_work",
+        "examination",
+        "replica_project",
+        "replica_object",
+        "material_lot",
+        "collection_decision",
+        "loan_label"
+      ]
+    },
+    "actor": {
+      "type": "object",
+      "required": ["person_id"],
+      "properties": {
+        "person_id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string" },
+        "role": { "$ref": "#/$defs/role" }
+      },
+      "additionalProperties": true
+    },
+    "role": {
+      "type": "string",
+      "description": "chief_copyist=主摹, copyist=临摹师, assistant=助手, supervisor=指导, expert=评审专家, conservator=文保人员, mounter=装裱师, registrar=藏品管理员",
+      "enum": [
+        "chief_copyist",
+        "copyist",
+        "assistant",
+        "supervisor",
+        "expert",
+        "conservator",
+        "mounter",
+        "registrar"
+      ]
+    },
+    "participant": {
+      "type": "object",
+      "required": ["person_id", "role", "scope"],
+      "properties": {
+        "person_id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string" },
+        "role": { "$ref": "#/$defs/role" },
+        "scope": {
+          "type": "string",
+          "minLength": 1,
+          "description": "该人员的责任范围，如“绢本主线全卷设色（attempt-A）”。"
+        },
+        "attempt_id": {
+          "type": "string",
+          "description": "并行尝试分支标识；接续他人时沿用或新开。"
+        },
+        "supervised_by_person_id": {
+          "type": "string",
+          "description": "指导关系：指导人 person_id。"
+        },
+        "period": {
+          "type": "object",
+          "properties": {
+            "from": { "type": "string", "format": "date" },
+            "to": { "type": "string", "format": "date" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "access": {
+      "type": "object",
+      "required": ["classification"],
+      "properties": {
+        "classification": {
+          "type": "string",
+          "description": "open=普通研究者可读全文；restricted=需研究授权；custodian_only=传统诀窍等，仅保管人及持有 authorization_scopes 者可读内容，其他调用方只见保管人与授权范围登记。",
+          "enum": ["open", "restricted", "custodian_only"]
+        },
+        "custodian": {
+          "type": "string",
+          "description": "保管责任机构或岗位。classification=custodian_only 时必填。"
+        },
+        "authorization_scopes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "读取内容所需授权码，如 know_how:pigment_preparation。"
+        },
+        "license_id": {
+          "type": "string",
+          "description": "内容/对象使用许可标识，标签输出须与此一致。"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": { "properties": { "classification": { "const": "custodian_only" } }, "required": ["classification"] },
+          "then": { "required": ["custodian", "authorization_scopes"] }
+        }
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["kind", "uri"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "reference_image",
+            "survey_image",
+            "micrograph",
+            "spectrum",
+            "trial_sheet",
+            "stage_photo",
+            "conservation_report",
+            "expert_opinion_document",
+            "know_how_note"
+          ]
+        },
+        "uri": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string" },
+        "recorded_at": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    },
+    "target_ref": {
+      "type": "object",
+      "required": ["kind", "id"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["reference_work", "replica_object"]
+        },
+        "id": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "identity_snapshot": {
+      "type": "object",
+      "description": "标签签发瞬间对象的身份快照，必须与谱系流投影出的当前值一致。",
+      "required": ["object_kind", "status", "custody_level", "license_id"],
+      "properties": {
+        "object_kind": {
+          "type": "string",
+          "enum": ["facsimile", "teaching_sample"],
+          "description": "facsimile=摹本（与原作 original 明确区分），teaching_sample=教学样张。"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["research_output", "teaching_asset", "collection_item", "deaccessioned"]
+        },
+        "custody_level": {
+          "type": "string",
+          "enum": ["L1", "L2", "L3"],
+          "description": "保管级别：L1 最高，L3 常规。"
+        },
+        "license_id": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "payload_reference_frozen": {
+      "type": "object",
+      "required": ["title", "basis_version"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "dynasty": { "type": "string" },
+        "attribution": { "type": "string" },
+        "holding_institution": { "type": "string" },
+        "basis_version": {
+          "type": "string",
+          "minLength": 1,
+          "description": "所参照的具体版本状态，如“1978年重装后本”。"
+        },
+        "condition_note": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "payload_examination_recorded": {
+      "type": "object",
+      "required": ["target", "methods"],
+      "properties": {
+        "target": { "$ref": "#/$defs/target_ref" },
+        "methods": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["visible_light", "raking_light", "infrared", "xray", "microscopy", "pigment_analysis", "fiber_analysis", "other"]
+          },
+          "minItems": 1
+        },
+        "conclusions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["claim"],
+            "properties": {
+              "claim": { "type": "string" },
+              "confidence": { "type": "string", "enum": ["high", "medium", "low"] }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "payload_finding_recorded": {
+      "type": "object",
+      "required": ["examination_id", "conclusions"],
+      "properties": {
+        "examination_id": { "type": "string", "minLength": 1 },
+        "target": { "$ref": "#/$defs/target_ref" },
+        "conclusions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["claim"],
+            "properties": {
+              "claim": { "type": "string" },
+              "confidence": { "type": "string", "enum": ["high", "medium", "low"] }
+            },
+            "additionalProperties": true
+          }
+        },
+        "flags_description_review": {
+          "type": "array",
+          "description": "指出哪些既有说明需要复核；只标记，不倒改历史记录。",
+          "items": {
+            "type": "object",
+            "required": ["aggregate_id", "claim"],
+            "properties": {
+              "aggregate_id": { "type": "string" },
+              "event_id": { "type": "string" },
+              "claim": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "payload_project_opened": {
+      "type": "object",
+      "required": ["title", "goal"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "goal": {
+          "type": "string",
+          "enum": ["research_copy", "teaching", "restoration_support", "exchange_copy"]
+        },
+        "planned_period": {
+          "type": "object",
+          "properties": {
+            "from": { "type": "string", "format": "date" },
+            "to": { "type": "string", "format": "date" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": true
+    },
+    "payload_assignment_recorded": {
+      "type": "object",
+      "required": ["assignments"],
+      "properties": {
+        "assignments": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["person_id", "role", "scope"],
+            "properties": {
+              "person_id": { "type": "string", "minLength": 1 },
+              "name": { "type": "string" },
+              "role": { "$ref": "#/$defs/role" },
+              "scope": { "type": "string", "minLength": 1 },
+              "attempt_id": { "type": "string" },
+              "supervised_by_person_id": { "type": "string" },
+              "period": {
+                "type": "object",
+                "properties": {
+                  "from": { "type": "string", "format": "date" },
+                  "to": { "type": "string", "format": "date" }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "payload_material_lot_recorded": {
+      "type": "object",
+      "required": ["material_kind", "batch_no"],
+      "properties": {
+        "material_kind": {
+          "type": "string",
+          "enum": ["paper", "silk", "pigment", "binder", "mounting_material", "other"]
+        },
+        "batch_no": { "type": "string", "minLength": 1 },
+        "name": { "type": "string" },
+        "source": { "type": "string" },
+        "preparation": {
+          "type": "string",
+          "description": "配制/加工工艺；若属传统诀窍，事件 access.classification 应取 custodian_only。"
+        },
+        "received_on": { "type": "string", "format": "date" }
+      },
+      "additionalProperties": true
+    },
+    "payload_material_tested": {
+      "type": "object",
+      "required": ["test", "suitable"],
+      "properties": {
+        "test": { "type": "string", "minLength": 1 },
+        "suitable": { "type": "boolean" },
+        "attempt_id": { "type": "string" },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "payload_trial_recorded": {
+      "type": "object",
+      "required": ["attempt_id", "outcome"],
+      "properties": {
+        "attempt_id": { "type": "string", "minLength": 1 },
+        "trial_no": { "type": "integer", "minimum": 1 },
+        "material_lot_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "method": { "type": "string" },
+        "target_detail_code": { "type": "string" },
+        "outcome": {
+          "type": "string",
+          "enum": ["accepted", "failed", "abandoned"]
+        },
+        "failure_reason": {
+          "type": "string",
+          "description": "outcome=failed 时必填；失败试验必须留痕。"
+        }
+      },
+      "additionalProperties": true
+    },
+    "payload_stage_attested": {
+      "type": "object",
+      "required": ["stage"],
+      "properties": {
+        "stage": {
+          "type": "string",
+          "enum": ["draft", "ink_line", "ink_wash", "coloring", "aging_treatment", "completed"]
+        },
+        "attempt_id": { "type": "string" },
+        "object_id": { "type": "string" },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "payload_detail_recorded": {
+      "type": "object",
+      "required": ["detail_code", "generation", "technique"],
+      "properties": {
+        "detail_code": {
+          "type": "string",
+          "minLength": 1,
+          "description": "跨项目稳定的细节编码，如 peak.cun_texture；用于同细节跨代际比较。"
+        },
+        "detail_name": { "type": "string" },
+        "generation": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "代际：1=直接摹原作，2=摹一代摹本，依次类推。"
+        },
+        "attempt_id": { "type": "string" },
+        "technique": { "type": "string", "minLength": 1 },
+        "material_lot_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "payload_generation_linked": {
+      "type": "object",
+      "required": ["parent", "relation"],
+      "properties": {
+        "parent": { "$ref": "#/$defs/target_ref" },
+        "relation": {
+          "type": "string",
+          "enum": ["direct_copy", "copy_of_copy", "interpretive"]
+        },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "payload_object_registered": {
+      "type": "object",
+      "required": ["title", "object_kind", "status"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "project_id": { "type": "string" },
+        "object_kind": {
+          "type": "string",
+          "enum": ["facsimile", "teaching_sample"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["research_output", "teaching_asset"]
+        },
+        "note": {
+          "type": "string",
+          "description": "登记时身份（如“研究成果，未入藏”）；后续身份变化由 IDENTITY_RECLASSIFIED 追加。"
+        }
+      },
+      "additionalProperties": true
+    },
+    "payload_identity_reclassified": {
+      "type": "object",
+      "required": ["from_status", "to_status", "reason"],
+      "properties": {
+        "from_status": {
+          "type": "string",
+          "enum": ["research_output", "teaching_asset", "collection_item", "deaccessioned"]
+        },
+        "to_status": {
+          "type": "string",
+          "enum": ["research_output", "teaching_asset", "collection_item", "deaccessioned"]
+        },
+        "from_kind": {
+          "type": "string",
+          "enum": ["facsimile", "teaching_sample"]
+        },
+        "to_kind": {
+          "type": "string",
+          "enum": ["facsimile", "teaching_sample"]
+        },
+        "reason": { "type": "string", "minLength": 1 },
+        "effective_from": { "type": "string", "format": "date" }
+      },
+      "additionalProperties": true
+    },
+    "payload_mounting_recorded": {
+      "type": "object",
+      "required": ["format", "mounter"],
+      "properties": {
+        "format": {
+          "type": "string",
+          "enum": ["hanging_scroll", "handscroll", "album_leaf", "framed", "unmounted"]
+        },
+        "mounter": { "type": "string", "minLength": 1 },
+        "material_lot_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "period": {
+          "type": "object",
+          "properties": {
+            "from": { "type": "string", "format": "date" },
+            "to": { "type": "string", "format": "date" }
+          },
+          "additionalProperties": false
+        },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "payload_conservation_performed": {
+      "type": "object",
+      "required": ["treatments", "conservator"],
+      "properties": {
+        "condition_before": { "type": "string" },
+        "treatments": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        },
+        "conservator": { "type": "string", "minLength": 1 },
+        "period": {
+          "type": "object",
+          "properties": {
+            "from": { "type": "string", "format": "date" },
+            "to": { "type": "string", "format": "date" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": true
+    },
+    "payload_expert_opinion_recorded": {
+      "type": "object",
+      "required": ["expert_id", "opinion"],
+      "properties": {
+        "expert_id": { "type": "string", "minLength": 1 },
+        "expert_name": { "type": "string" },
+        "opinion": { "type": "string", "minLength": 1 },
+        "recommendation": {
+          "type": "string",
+          "enum": ["accession", "reject", "further_study", "teaching_only", "none"]
+        }
+      },
+      "additionalProperties": true
+    },
+    "payload_description_review_flagged": {
+      "type": "object",
+      "required": ["source_finding_event_id", "claims_to_review"],
+      "properties": {
+        "source_finding_event_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "触发复核标记的 FINDING_RECORDED 事件。"
+        },
+        "claims_to_review": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["event_id", "claim"],
+            "properties": {
+              "event_id": { "type": "string" },
+              "claim": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "payload_object_accessioned": {
+      "type": "object",
+      "required": ["object_id", "decision", "custody_level", "license_id"],
+      "properties": {
+        "object_id": { "type": "string", "minLength": 1 },
+        "decision": {
+          "type": "string",
+          "enum": ["accepted", "deferred", "rejected"]
+        },
+        "accession_no": { "type": "string" },
+        "custody_level": {
+          "type": "string",
+          "enum": ["L1", "L2", "L3"]
+        },
+        "license_id": { "type": "string", "minLength": 1 },
+        "basis": {
+          "type": "array",
+          "description": "入藏依据：作者价值 / 材料价值 / 工艺价值等。",
+          "items": {
+            "type": "string",
+            "enum": ["author_value", "material_value", "craft_value", "historical_value", "provenance"]
+          },
+          "minItems": 1
+        },
+        "committee_member_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "opinion_event_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": true
+    },
+    "payload_label_revised": {
+      "type": "object",
+      "required": ["object_id", "revision_reason", "identity_snapshot"],
+      "properties": {
+        "object_id": { "type": "string", "minLength": 1 },
+        "revision_reason": { "type": "string", "minLength": 1 },
+        "label_text": { "type": "string" },
+        "identity_snapshot": { "$ref": "#/$defs/identity_snapshot" }
+      },
+      "additionalProperties": true
+    },
+    "payload_loan_label_issued": {
+      "type": "object",
+      "required": ["object_id", "loan_exhibition", "identity_snapshot"],
+      "properties": {
+        "object_id": { "type": "string", "minLength": 1 },
+        "loan_exhibition": { "type": "string", "minLength": 1 },
+        "label_text": { "type": "string" },
+        "identity_snapshot": { "$ref": "#/$defs/identity_snapshot" },
+        "valid_period": {
+          "type": "object",
+          "properties": {
+            "from": { "type": "string", "format": "date" },
+            "to": { "type": "string", "format": "date" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
 }
